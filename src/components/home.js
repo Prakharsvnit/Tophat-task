@@ -36,13 +36,6 @@ const Home = () => {
         variant="outlined"
         onChange={(e) => setUser(e.target.value)}
       />
-      <Button
-        className={styles.mainBtn}
-        variant="contained"
-        // onClick={handleClick}
-      >
-        Submit
-      </Button>
       <Typography variant="h4" gutterBottom>
         Posts
       </Typography>
