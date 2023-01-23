@@ -2,7 +2,11 @@
 
 Clone the repository
 
-In the project directory, you can run:
+## Install Dependencies
+
+### `npm install`
+
+After installing dependencies,in the project directory, you can run:
 
 ### `npm start`
 
