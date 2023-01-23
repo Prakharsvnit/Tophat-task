@@ -2,7 +2,7 @@ import * as React from "react";
 import UserComments from "./userCommnets";
 import UserPosts from "./userPosts";
 import { Typography, TextField, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import styles from "../css/home.module.css";
 
@@ -12,8 +12,9 @@ const Home = () => {
   const [postData, setPostData] = useState({});
   const [commentData, setCommentData] = useState({});
 
-  useEffect(() => {
-    const getUser = async (user) => {
+  const getUser = useCallback(
+    async (event) => {
+      event.preventDefault();
       const userResp = await axios.get(baseURL + "/users");
       const postResp = await axios.get(baseURL + "/posts");
       const commentResp = await axios.get(baseURL + "/comments");
@@ -21,9 +22,13 @@ const Home = () => {
       const user_id = userData.id;
       setPostData(postResp.data.find((obj) => obj.id === user_id));
       setCommentData(commentResp.data.find((obj) => obj.id === user_id));
-    };
-    getUser(user);
-  }, [user]);
+    },
+    [user]
+  );
+
+  useEffect(() => {
+    getUser();
+  }, [getUser, user]);
 
   return (
     <div className={styles.mainDiv}>
@@ -36,6 +41,9 @@ const Home = () => {
         variant="outlined"
         onChange={(e) => setUser(e.target.value)}
       />
+      <Button variant="contained" onClick={(event) => getUser(event)}>
+        Search
+      </Button>
       <Typography variant="h4" gutterBottom>
         Posts
       </Typography>
